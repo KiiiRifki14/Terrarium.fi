@@ -25,9 +25,9 @@ export default function BudgetPlant({ category, limit, spent }) {
   };
 
   return (
-    <div className="bg-white rounded-3xl p-4 border border-mint flex items-center gap-4">
+    <div className="bg-white rounded-3xl p-4 border border-mint flex items-center gap-4 shadow-sm">
       <motion.div 
-        className="text-4xl"
+        className="text-4xl select-none"
         variants={plantVariants}
         animate={state}
       >
@@ -35,7 +35,7 @@ export default function BudgetPlant({ category, limit, spent }) {
       </motion.div>
       <div className="flex-1">
         <div className="flex justify-between items-end mb-2">
-          <h4 className="font-fredoka text-forest">{category}</h4>
+          <h4 className="font-fredoka text-forest font-bold">{category}</h4>
           <span className={`text-sm font-bold ${color}`}>
             {Math.round(percentage)}%
           </span>
@@ -48,9 +48,16 @@ export default function BudgetPlant({ category, limit, spent }) {
             className={`h-full rounded-full ${percentage > 80 ? 'bg-terracotta' : percentage > 50 ? 'bg-yellow-500' : 'bg-spring'}`}
           />
         </div>
-        <p className="text-xs text-forest/50 mt-2">
-          Rp {spent.toLocaleString()} / Rp {limit.toLocaleString()}
-        </p>
+        <div className="flex justify-between items-center mt-2">
+          <p className="text-xs text-forest/50">
+            Rp {Math.round(spent).toLocaleString('id-ID')} / Rp {Math.round(limit).toLocaleString('id-ID')}
+          </p>
+          {percentage > 80 && (
+            <span className="text-[10px] text-terracotta font-bold animate-pulse">
+              ⚠️ Hampir layu! Hemat air/uang.
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );
